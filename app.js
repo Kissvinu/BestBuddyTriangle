@@ -4,11 +4,17 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var fs = require('fs');
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var _ = require("underscore");
+var getjsondata = require('./public/Database/data');
 
 var app = express();
+var imageidir='images/';
+var imagealbumdir='Album';
+var multiparty = require('connect-multiparty'),
+    multipartyMiddleware = multiparty();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -56,5 +62,83 @@ app.use(function(err, req, res, next) {
   });
 });
 
+routes.post('/api/registration', multipartyMiddleware, function(req, res) {
+    // We are able to access req.files.file thanks to 
+    // the multiparty middleware
+    var name = req.body.name;
+    console.log(req.body);
+    getjsondata.data.push(req.body);
+    fs.writeFile('./Database/data.json', JSON.stringify(getjsondata));
+    fs.readFile(req.files.file[0].path, function(err, data) {
+        var imageName = req.files.file[0].originalFilename;
+        /// If there's an error
+        if (!imageName) {
+            console.log("There was an error");
+            res.redirect("/");
+            res.end();
 
+        } else {
+            var newPath = __dirname + imageidir + req.body.name + "/" + imageName;
+            if (!fs.existsSync(__dirname + imageidir + req.body.name)) {
+                fs.mkdirSync(__dirname + imageidir + req.body.name);
+            }
+            /// write file to uploads/fullsize folder
+            fs.writeFile(newPath, data, function(err) {
+                var userData = _.where(getjsondata.data, {
+                    'name': name
+                });
+                var index = _.indexOf(getjsondata.data, userData[0]);
+                console.log('indexvalue'+index);
+                getjsondata.data[index].picture= imageidir + req.body.name + "/" + imageName;
+                fs.writeFile('./Database/data.json', JSON.stringify(getjsondata));
+                res.end();
+            });
+        }
+    });
+});
+
+routes.post('/api/uploadmultipleImage', multipartyMiddleware, function(req, res) {
+    // We are able to access req.files.file thanks to 
+    // the multiparty middleware
+    req.files.file.forEach(function(v, i) {
+        fs.readFile(v.path, function(err, data) {
+            console.log(i);
+            var imageName = v.originalFilename;
+            /// If there's an error
+            if (!imageName) {
+                console.log("There was an error");
+                res.redirect("/");
+                res.end();
+            } else {
+                var name = 'vinu';
+                var newPath = __dirname + imageidir + name + "/"+imagealbumdir+"/"+ imageName;
+                var AlbumPath = imageidir + name + "/"+imagealbumdir+"/"+ imageName;
+                if (fs.existsSync(__dirname + imageidir + name)) {
+                    if (!fs.existsSync(__dirname + imageidir + name + "/"+imagealbumdir)) {
+                        fs.mkdirSync(__dirname + imageidir + name + "/"+imagealbumdir);
+                    }
+                } else {
+                    fs.mkdirSync(__dirname + imageidir + name);
+                    fs.mkdirSync(__dirname + imageidir + name + "/"+imagealbumdir);
+                }
+                /// write file to uploads/fullsize folder
+                fs.writeFile(newPath, data, function(err) {
+                    var userData = _.where(getjsondata.data, {
+                        'name': name
+                    });
+                    var index = _.indexOf(getjsondata.data, userData[0]);
+                    console.log(index);
+                    if (getjsondata.data[index].Album) {
+                        getjsondata.data[index].Album.push(AlbumPath);
+                    } else {
+                        getjsondata.data[index].Album = [];
+                        getjsondata.data[index].Album.push(AlbumPath);
+                    }
+                    fs.writeFile('./Database/data.json', JSON.stringify(getjsondata));
+                });
+            }
+        });
+    });
+    res.end();
+});
 module.exports = app;

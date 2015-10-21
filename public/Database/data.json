@@ -1,0 +1,33 @@
+{
+    "data": [{
+        "name": "vinu",
+        "picture": "images/vinu.jpg",
+        "Education": "Degree",
+        "profession": "None",
+        "Album": ["images/kalyan.jpg", "images/vinu.jpg", "images/homepic.jpg", "images/vinu/Album/20150801_144407.jpg", "images/vinu/Album/20150801_144402.jpg", "images/vinu/Album/20150801_144440.jpg", "images/vinu/Album/20150801_144428.jpg", "images/vinu/Album/20150801_144421.jpg", "images/vinu/Album/20150801_144444.jpg", "images/vinu/Album/20150801_144435.jpg", "images/vinu/Album/20150801_144412.jpg", "images/vinu/Album/20150801_144449.jpg", "images/vinu/Album/20150801_144500.jpg", "images/vinu/Album/20150801_144506.jpg", "images/vinu/Album/20150801_144454.jpg"],
+        "facebook": "www.fb.com/vinuswapna",
+        "birthday": "",
+        "comment": [{
+            "name": "valli",
+            "comment": "Good Girl",
+            "time": "today"
+        }, {
+            "name": "surendra",
+            "comment": "Most jaffa of the Year",
+            "time": "today"
+        }],
+        "Emailid": "vinodanasuri@gmail.com",
+        "password": "pwd",
+        "joiningdate": "16/10/2015"
+    },{
+        "name": "kishore",
+        "Emailid": "kishorealla402@gmail.com",
+        "password": "K15h0re.*",
+        "phonenumber": "9885620024",
+        "joiningdate": "2015-10-20T16:01:12.773Z",
+        "myself": "hi  dis is kishore",
+        "Birthday": "1990-02-05T18:30:00.000Z",
+        "Facebook": "https://www.facebook.com/alla.kishore",
+        "picture": "images/kishore/20150801_143909.jpg"
+    }]
+}

@@ -19,29 +19,31 @@ var app=angular
         'ui.sortable',
         'door3.css',
         'ngFileUpload',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'infinite-scroll',
+        'ngFileUpload'
     ])
     .config(function($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: 'views/homepage.html',
-                controller: 'MainCtrl'
+                templateUrl: 'views/DashBoard.html',
+                controller: 'DashBoardCtrl'
             })
-            .when('/aboutus/', {
-                templateUrl: 'views/aboutus.html',
-                controller: 'AboutusCtrl'
+            .when('/idea/', {
+                templateUrl: 'views/IdeaView.html',
+                controller: 'ideaCrtl'
             })
-            .when('/aboutus2/', {
-                templateUrl: 'views/aboutus2.html',
-                controller: 'Aboutus2Ctrl'
+            .when('/IdeaInsert/', {
+                templateUrl: 'views/IdeaInsert.html',
+                controller: 'ideaInsertCtrl'
             })
-            .when('/service/', {
-                templateUrl: 'views/service.html',
+            .when('/games/', {
+                templateUrl: 'views/Games.html',
                 controller: 'serviceCtrl'
             })
-            .when('/pricing/', {
-                templateUrl: 'views/pricing.html',
-                controller: 'pricingCtrl'
+            .when('/playgames/', {
+                templateUrl: 'views/dumbshellview.html',
+                controller: 'dumbshellCtrl'
             })
             .when('/contact/', {
                 templateUrl: 'views/contact.html',
@@ -95,9 +97,9 @@ var app=angular
                 templateUrl: 'views/portfolioone.html',
                 controller: 'portfoliooneCtrl'
             })
-            .when('/portfoliotwo/', {
+            .when('/gallery/', {
                 templateUrl: 'views/portfoliotwo.html',
-                controller: 'portfoliotwoCtrl'
+                controller: 'portfolioCtrl'
             })
             .when('/portfoliothree/', {
                 templateUrl: 'views/portfoliothree.html',

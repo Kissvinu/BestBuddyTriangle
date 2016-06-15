@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="action">
                         <div class="col-sm-12">
-                            <h1 class="title">Portfolio</h1>
+                            <h1 class="title">Our Own InstaGram</h1>
                             <p>Be Creative</p>
                         </div>
                     </div>
@@ -18,18 +18,52 @@
     <section id="portfolio">
         <div class="container">
             <div class="row">
-                <ul class="portfolio-filter text-center">
-                    <li><a class="btn btn-default active" href="#/" data-filter="*">All</a></li>
-                    <li><a class="btn btn-default" href="#/" data-filter=".branded">Branded</a></li>
-                    <li><a class="btn btn-default" href="#/" data-filter=".design">Design</a></li>
-                    <li><a class="btn btn-default" href="#/" data-filter=".folio">Folio</a></li>
-                    <li><a class="btn btn-default" href="#/" data-filter=".logos">Logos</a></li>
-                    <li><a class="btn btn-default" href="#/" data-filter=".mobile">Mobile</a></li>
-                    <li><a class="btn btn-default" href="#/" data-filter=".mockup">Mockup</a></li>
-                </ul><!--/#portfolio-filter-->
-                    
+                <div  ngf-select  ngf-multiple="true"  ngf-include-dir="true"  ng-model="files" class="drop-box pull-right">
+              <span class="link">Select </span></div>
+              <div  ngf-drop ngf-multiple="true" ng-model="files" class="drop-box pull-right">
+              <span> Paste or Drop Image from browser</span></div>
+          </div>
+          <div>
+               <div class="preview">
+            <div ng-show="files.length>0">Now</div>
+            <img ngf-src="r" ng-repeat="r in files">
+            <audio controls ngf-src="!files[0].$error && files[0]"></audio>
+            <video controls ngf-src="!files[0].$error && files[0]"></video>
+          </div>
+          </div>
+                <ul class="portfolio-filter text-center hidden">
+                    <li><a class="btn btn-default active" href="/" data-filter="*">All</a></li>
+                    <li><a class="btn btn-default" href="/" data-filter=".branded">Branded</a></li>
+                    <li><a class="btn btn-default" href="/" data-filter=".design">Design</a></li>
+                    <li><a class="btn btn-default" href="/" data-filter=".folio">Folio</a></li>
+                    <li><a class="btn btn-default" href="/" data-filter=".logos">Logos</a></li>
+                    <li><a class="btn btn-default" href="/" data-filter=".mobile">Mobile</a></li>
+                    <li><a class="btn btn-default" href="/" data-filter=".mockup">Mockup</a></li>
+                </ul>
                 <div class="portfolio-items">
-                    <div class="col-xs-6 col-sm-4 col-md-3 portfolio-item branded logos">
+                    <div ng-repeat="Parentitem in DirectoryData">
+                        </br>
+                        <h2>{{Parentitem.DirectoryName|dateAgo}}</h2>
+                    <div class="col-xs-6 col-sm-4 col-md-3 portfolio-item branded logos" ng-repeat="data in Parentitem.Data">
+                        <div class="portfolio-wrapper">
+                            <div class="portfolio-single">
+                                <div class="portfolio-thumb">
+                                    <img src="{{data|pathChanger}}" class="img-responsive" alt="">
+                                </div>
+                                <div class="portfolio-view">
+                                    <ul class="nav nav-pills">
+                                        <!--<li><a href="portfolio-details.html"><i class="fa fa-link"></i></a></li>-->
+                                        <li><a href="{{data|pathChanger}}" data-lightbox="example-set"><i class="fa fa-eye"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="portfolio-info ">
+                                <h2></h2>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <!--<div class="col-xs-6 col-sm-4 col-md-3 portfolio-item branded logos">
                         <div class="portfolio-wrapper">
                             <div class="portfolio-single">
                                 <div class="portfolio-thumb">
@@ -316,9 +350,11 @@
                                 <h2>Sailing Vivamus</h2>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
-                <div class="portfolio-pagination">
+                <div>
+                    <button ng-show="nodata" class="btn btn-warning pull-right" ng-click="AddMore()"><i style="font-size:25px;" class="fa fa-cloud-download fa-5" aria-hidden="true"></i></button>                </div>
+                <div class="portfolio-pagination hidden">
                     <ul class="pagination">
                       <li><a href="#/">left</a></li>
                       <li><a href="#/">1</a></li>
@@ -337,3 +373,13 @@
         </div>
     </section>
     <!--/#portfolio-->
+<style>
+.drop-box {
+    background: #F8F8F8;
+    border: 5px dashed #DDD;
+    width: 170px;
+    text-align: center;
+    padding: 50px 10px;
+    margin-left: 10px;
+}
+</style>
